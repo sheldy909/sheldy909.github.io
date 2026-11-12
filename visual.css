@@ -53,3 +53,18 @@ html:not(.custom-cursor-ready) a,html:not(.custom-cursor-ready) button{cursor:po
  .custom-cursor.hovered.pressed{transform:translate(-50%,-50%) scale(1.0714285714)}
 }
 @media(prefers-reduced-motion:reduce){.custom-cursor,.custom-cursor.hovered{transition:none}}
+
+/* Current section is explicit; visited links do not imply an active page. */
+.site-navigation a,.site-navigation a:visited{color:#090909!important}
+.site-navigation a[aria-current="page"],.site-navigation a:hover,.site-navigation a:focus-visible{color:#7634e2!important}
+@media(max-width:767px){.site-navigation.header-menu{display:grid;grid-template-columns:1fr 1fr}.site-navigation a:nth-child(even){justify-self:end}}
+
+/* Align the visible top of page titles with the desktop header text.
+   em keeps the optical correction proportional to the existing fluid type. */
+@media (min-width:1200px){
+  .main > .body > .body-h > h1{
+    position:relative;
+    top:-.16em;
+  }
+
+}

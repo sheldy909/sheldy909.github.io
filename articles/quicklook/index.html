@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html class="wf-onest-n3-active wf-onest-n4-active wf-onest-n5-active wf-onest-n6-active wf-displayswap-n4-inactive wf-active" lang="ru"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<link href="/assets/9e7d89d35f64e6df3e.css" rel="stylesheet" type="text/css">
+<link href="/assets/7f63ed92c34a6af6f1.css" rel="stylesheet" type="text/css">
+<link href="/assets/582b15982a3a97c984.css" rel="stylesheet" type="text/css">
+<link href="/assets/88d83fba9f9b7817ca.css" rel="stylesheet" type="text/css">
+<!-- This site was created in Taptop. https://taptop.pro/ -->
+<meta content="Taptop" name="generator">
+<meta content="all" name="robots">
+<title>QuickLook: одна кнопка, которая избавила меня от ненужных открытий Photoshop</title>
+<!-- assets.top -->
+<link href="https://sheldy909.taptop.site/favicon.png" rel="icon" type="image/png">
+<meta content="website" property="og:type">
+<meta content="/articles/quicklook/" property="og:url">
+<meta content="summary" name="twitter:card">
+<!-- /assets.top -->
+<meta content="" name="description">
+<meta content="" name="keywords">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<link href="/assets/7212a17e6c58661c4f.css" rel="stylesheet">
+<link href="/assets/385404166ee527e8ac.css" media="all" rel="stylesheet">
+<!-- 46b9544ffa2e5e73c3c971fe2ede35a5 -->
+<!--s3_require-->
+<!--/s3_require-->
+<style>
+html{cursor:none!important}
+html *,html *::before,html *::after{cursor:none!important}
+
+html,body{background:#e9e9e9}
+
+@keyframes scaleUp{
+0%{opacity:0;transform:scale(.96)}
+100%{opacity:1;transform:scale(1)}
+}
+
+@keyframes scaleDown{
+0%{opacity:1;transform:scale(1)}
+100%{opacity:0;transform:scale(.96)}
+}
+
+.main{
+animation:scaleUp .4s cubic-bezier(.76,0,.24,1) both;
+transform-origin:center top
+}
+
+.main.leaving{
+animation:scaleDown .4s cubic-bezier(.76,0,.24,1) both
+}
+
+/* CUSTOM CURSOR */
+
+.custom-cursor{
+position:fixed;
+left:-100px;
+top:-100px;
+width:14px;
+height:14px;
+z-index:2147483647;
+border-radius:20%;
+background:#fff;
+mix-blend-mode:difference;
+transform:translate(-50%,-50%);
+pointer-events:none;
+opacity:1;
+will-change:left,top,width,height,transform,opacity;
+transition:
+width .2s ease,
+height .2s ease,
+transform .15s ease,
+opacity .15s ease
+}
+
+.custom-cursor.hidden{
+opacity:0
+}
+
+.custom-cursor.hovered{
+width:20px;
+height:20px
+}
+
+.custom-cursor.pressed{
+transform:translate(-50%,-50%) scale(.75)
+}
+
+.custom-cursor.right-pressed{
+background:#E2346B;
+mix-blend-mode:normal
+}
+
+/* TWEMOJI SVG */
+
+img.emoji{
+height:1.1em!important;
+width:1.1em!important;
+max-height:1.1em!important;
+max-width:1.1em!important;
+display:inline-block!important;
+vertical-align:-.15em!important;
+margin:0 .1em!important;
+object-fit:contain!important
+}
+
+/* SELECTION */
+
+::selection{
+background:#7634E2;
+color:#fff
+}
+
+/* MOBILE / TOUCH */
+
+@media(max-width:768px),(hover:none),(pointer:coarse){
+html,html *,html *::before,html *::after{
+cursor:auto!important
+}
+
+.custom-cursor{
+display:none!important
+}
+}
+</style>
+<style>/*! PhotoSwipe main CSS by Dmytro Semenov | photoswipe.com */
+
+.pswp {
+  --pswp-bg: #000;
+  --pswp-placeholder-bg: #222;
+  
+
+  --pswp-root-z-index: 100000;
+  
+  --pswp-preloader-color: rgba(79, 79, 79, 0.4);
+  --pswp-preloader-color-secondary: rgba(255, 255, 255, 0.9);
+  
+  /* defined via js:
+  --pswp-transition-duration: 333ms; */
+  
+  --pswp-icon-color: #fff;
+  --pswp-icon-color-secondary: #4f4f4f;
+  --pswp-icon-stroke-color: #4f4f4f;
+  --pswp-icon-stroke-width: 2px;
+
+  --pswp-error-text-color: var(--pswp-icon-color);
+}
+
+
+/*
+	Styles for basic PhotoSwipe (pswp) functionality (sliding area, open/close transitions)
+*/
+
+.pswp {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: var(--pswp-root-z-index);
+	display: none;
+	touch-action: none;
+	outline: 0;
+	opacity: 0.003;
+	contain: layout style size;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Prevents focus outline on the root element,
+  (it may be focused initially) */
+.pswp:focus {
+  outline: 0;
+}
+
+.pswp * {
+  box-sizing: border-box;
+}
+
+.pswp img {
+  max-width: none;
+}
+
+.pswp--open {
+	display: block;
+}
+
+.pswp,
+.pswp__bg {
+	transform: translateZ(0);
+	will-change: opacity;
+}
+
+.pswp__bg {
+  opacity: 0.005;
+	background: var(--pswp-bg);
+}
+
+.pswp,
+.pswp__scroll-wrap {
+	overflow: hidden;
+}
+
+.pswp__scroll-wrap,
+.pswp__bg,
+.pswp__container,
+.pswp__item,
+.pswp__content,
+.pswp__img,
+.pswp__zoom-wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.pswp__img,
+.pswp__zoom-wrap {
+	width: auto;
+	height: auto;
+}
+
+.pswp--click-to-zoom.pswp--zoom-allowed .pswp__img {
+	cursor: -webkit-zoom-in;
+	cursor: -moz-zoom-in;
+	cursor: zoom-in;
+}
+
+.pswp--click-to-zoom.pswp--zoomed-in .pswp__img {
+	cursor: move;
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+	cursor: grab;
+}
+
+.pswp--click-to-zoom.pswp--zoomed-in .pswp__img:active {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}
+
+/* :active to override grabbing cursor */
+.pswp--no-mouse-drag.pswp--zoomed-in .pswp__img,
+.pswp--no-mouse-drag.pswp--zoomed-in .pswp__img:active,
+.pswp__img {
+	cursor: -webkit-zoom-out;
+	cursor: -moz-zoom-out;
+	cursor: zoom-out;
+}
+
+
+/* Prevent selection and tap highlights */
+.pswp__container,
+.pswp__img,
+.pswp__button,
+.pswp__counter {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.pswp__item {
+	/* z-index for fade transition */
+	z-index: 1;
+	overflow: hidden;
+}
+
+.pswp__hidden {
+	display: none !important;
+}
+
+/* Allow to click through pswp__content element, but not its children */
+.pswp__content {
+  pointer-events: none;
+}
+.pswp__content > * {
+  pointer-events: auto;
+}
+
+
+/*
+
+  PhotoSwipe UI
+
+*/
+
+/*
+	Error message appears when image is not loaded
+	(JS option errorMsg controls markup)
+*/
+.pswp__error-msg-container {
+  display: grid;
+}
+.pswp__error-msg {
+	margin: auto;
+	font-size: 1em;
+	line-height: 1;
+	color: var(--pswp-error-text-color);
+}
+
+/*
+class pswp__hide-on-close is applied to elements that
+should hide (for example fade out) when PhotoSwipe is closed
+and show (for example fade in) when PhotoSwipe is opened
+ */
+.pswp .pswp__hide-on-close {
+	opacity: 0.005;
+	will-change: opacity;
+	transition: opacity var(--pswp-transition-duration) cubic-bezier(0.4, 0, 0.22, 1);
+	z-index: 10; /* always overlap slide content */
+	pointer-events: none; /* hidden elements should not be clickable */
+}
+
+/* class pswp--ui-visible is added when opening or closing transition starts */
+.pswp--ui-visible .pswp__hide-on-close {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* <button> styles, including css reset */
+.pswp__button {
+	position: relative;
+	display: block;
+	width: 50px;
+	height: 60px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	cursor: pointer;
+	background: none;
+	border: 0;
+	box-shadow: none;
+	opacity: 0.85;
+	-webkit-appearance: none;
+	-webkit-touch-callout: none;
+}
+
+.pswp__button:hover,
+.pswp__button:active,
+.pswp__button:focus {
+  transition: none;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  opacity: 1;
+}
+
+.pswp__button:disabled {
+  opacity: 0.3;
+  cursor: auto;
+}
+
+.pswp__icn {
+  fill: var(--pswp-icon-color);
+  color: var(--pswp-icon-color-secondary);
+}
+
+.pswp__icn {
+  position: absolute;
+  top: 14px;
+  left: 9px;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pswp__icn-shadow {
+  stroke: var(--pswp-icon-stroke-color);
+  stroke-width: var(--pswp-icon-stroke-width);
+  fill: none;
+}
+
+.pswp__icn:focus {
+	outline: 0;
+}
+
+/*
+	div element that matches size of large image,
+	large image loads on top of it,
+	used when msrc is not provided
+*/
+div.pswp__img--placeholder,
+.pswp__img--with-bg {
+	background: var(--pswp-placeholder-bg);
+}
+
+.pswp__top-bar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 60px;
+	display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+	z-index: 10;
+
+	/* allow events to pass through top bar itself */
+	pointer-events: none !important;
+}
+.pswp__top-bar > * {
+  pointer-events: auto;
+  /* this makes transition significantly more smooth,
+     even though inner elements are not animated */
+  will-change: opacity;
+}
+
+
+/*
+
+  Close button
+
+*/
+.pswp__button--close {
+  margin-right: 6px;
+}
+
+
+/*
+
+  Arrow buttons
+
+*/
+.pswp__button--arrow {
+  position: absolute;
+  top: 0;
+  width: 75px;
+  height: 100px;
+  top: 50%;
+  margin-top: -50px;
+}
+
+.pswp__button--arrow:disabled {
+  display: none;
+  cursor: default;
+}
+
+.pswp__button--arrow .pswp__icn {
+  top: 50%;
+  margin-top: -30px;
+  width: 60px;
+  height: 60px;
+  background: none;
+  border-radius: 0;
+}
+
+.pswp--one-slide .pswp__button--arrow {
+  display: none;
+}
+
+/* hide arrows on touch screens */
+.pswp--touch .pswp__button--arrow {
+  visibility: hidden;
+}
+
+/* show arrows only after mouse was used */
+.pswp--has_mouse .pswp__button--arrow {
+  visibility: visible;
+}
+
+.pswp__button--arrow--prev {
+  right: auto;
+  left: 0px;
+}
+
+.pswp__button--arrow--next {
+  right: 0px;
+}
+.pswp__button--arrow--next .pswp__icn {
+  left: auto;
+  right: 14px;
+  /* flip horizontally */
+  transform: scale(-1, 1);
+}
+
+/*
+
+  Zoom button
+
+*/
+.pswp__button--zoom {
+  display: none;
+}
+
+.pswp--zoom-allowed .pswp__button--zoom {
+  display: block;
+}
+
+/* "+" => "-" */
+.pswp--zoomed-in .pswp__zoom-icn-bar-v {
+  display: none;
+}
+
+
+/*
+
+  Loading indicator
+
+*/
+.pswp__preloader {
+  position: relative;
+  overflow: hidden;
+  width: 50px;
+  height: 60px;
+  margin-right: auto;
+}
+
+.pswp__preloader .pswp__icn {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  animation: pswp-clockwise 600ms linear infinite;
+}
+
+.pswp__preloader--active .pswp__icn {
+  opacity: 0.85;
+}
+
+@keyframes pswp-clockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/*
+
+  "1 of 10" counter
+
+*/
+.pswp__counter {
+  height: 30px;
+  margin-top: 15px;
+  margin-inline-start: 20px;
+  font-size: 14px;
+  line-height: 30px;
+  color: var(--pswp-icon-color);
+  text-shadow: 1px 1px 3px var(--pswp-icon-color-secondary);
+  opacity: 0.85;
+}
+
+.pswp--one-slide .pswp__counter {
+  display: none;
+}
+</style><link href="/visual.css?v=30" rel="stylesheet"><link href="/typography.css?v=23" rel="stylesheet"><link rel="stylesheet" href="/system.css?v=36">
+</head>
+<body id="top" style=""><a class="skip-link" href="#iwibgd3ly_0">Перейти к содержимому</a><div class="mosaic-wrap">
+<div class="root" id="is5n3l4wn_0">
+<div class="div main div--u-ix1qzvf79" id="ix1qzvf79_0">
+<div class="embed global-styles embed--u-iqfjxxypz" id="iqfjxxypz_0">
+<style>
+  html { font-size: calc(-0.0006236080178174674rem + 1.111804008908686vw); }
+  @media screen and (max-width:1440px) { html { font-size: calc(-0.0006236080178174674rem + 1.111804008908686vw); } }
+  @media screen and (max-width:1199px) { html { font-size: calc(0.008143497757847729rem + 2.066367713004484vw); } }
+  @media screen and (max-width:768px) { html { font-size: calc(-0.0018546712802769427rem + 2.0871972318339105vw); } }
+  @media screen and (max-width:479px) { html { font-size: calc(0.0008988764044947084rem + 4.098876404494381vw); } }
+  @media screen and (max-width:390px) { html { font-size: calc(-0.002570694087403599rem + 4.113110539845758vw); } }
+</style>
+<style>
+.cases_grid > :nth-child(2n) .cases_card {
+  text-align: right;
+  align-items: flex-end;
+}
+</style>
+</div>
+<header class="div div--u-i05t5jz5h header" id="i05t5jz5h_0">
+<a class="link-block person" data-action-element="" href="/" id="i3s4hwak6_0">
+<div class="image person-photo" id="issa5utxq_0">
+<img alt="" class="image__img" data-origin-src="/thumb/2/gjwTxeXszSbbEXi5JU8Rrw/1517r1517/d/image_20.jpg" data-size="1517x1517" id="i0p5bbj4s_0" src="/assets/88f7b4b861f67b58f7.jpg" title="">
+</div>
+<div class="div person-bio" id="idiuk8c4o_0">
+<div class="text person-bio-name text--u-iuxm85vq6" id="iuxm85vq6_0">
+<span class="text-block-wrap-div">Роман Пляскин</span>
+</div>
+<div class="text person-bio-text text--u-i3w706hd2" id="i3w706hd2_0" style="color: rgb(9, 9, 9);">
+<span class="text-block-wrap-div">Дизайнер</span>
+</div>
+</div>
+</a>
+<nav class="div header-menu site-navigation" aria-label="Основная навигация"><a class="link text-menu" href="/"><span class="text-block-wrap-div">Главная <img class="emoji" alt="🏠" aria-hidden="true" draggable="false" src="/emoji/home.svg"></span></a><a class="link text-menu" href="/portfolio"><span class="text-block-wrap-div">Портфолио <img class="emoji" alt="🖼" aria-hidden="true" draggable="false" src="/emoji/1f5bc.svg"></span></a><a class="link text-menu" href="/useful" aria-current="page"><span class="text-block-wrap-div">Полезное <img class="emoji" alt="❤" aria-hidden="true" draggable="false" src="/emoji/2764.svg"></span></a><a class="link text-menu" href="/cv"><span class="text-block-wrap-div">Резюме <img class="emoji" alt="💾" aria-hidden="true" draggable="false" src="/emoji/1f4be.svg"></span></a></nav>
+</header>
+<main class="div body div--u-iwibgd3ly detail-layout" id="iwibgd3ly_0" tabindex="-1">
+<a aria-label="← Назад в полезное" class="link text-menu link--u-i81qx4vuo detail-back" data-action-element="" href="/useful" id="i81qx4vuo_0" title="← Назад в полезное">← Назад в полезное</a>
+<div class="body-h article-heading detail-heading"><h1 class="reading-title">QuickLook: одна кнопка, которая избавила меня от ненужных открытий Photoshop</h1></div><div class="tt-rich-text case" id="iv4mye56h_0">
+<div class="text-block-wrap-div"><p>Есть вещи, которые замечаешь только после того, как поработал на macOS. Одна из них — просмотр файлов по нажатию пробела. Выделил файл, нажал пробел, моментально увидел содержимое. Никаких лишних действий. QuickLook добавляет в Windows это поведение.</p><h2>Где он экономит время</h2><p>Казалось бы — ну, открыть файл, посмотреть и закрыть. Мелочь. Но эта «мелочь» случается иногда десятки раз в день. Нужно просто убедиться: тот ли это макет, нужная ли версия, что вообще внутри.</p><p>Если это .psd или .ai, то стандартный путь выглядит так: дождаться, пока запустится Photoshop или Illustrator, подождать, пока откроется файл, посмотреть пару секунд, закрыть. Даже на хорошем компьютере это занимает время.</p><p>С QuickLook всё сводится к двум действиям:</p><p><img class="emoji" src="/emoji/1f449-1f3fd.svg" alt="👉🏽" aria-hidden="true" draggable="false"> выделил файл</p><p><img class="emoji" src="/emoji/1f449-1f3fd.svg" alt="👉🏽" aria-hidden="true" draggable="false"> нажал пробел</p><p>Превью появляется мгновенно. Если нужно пройтись по нескольким файлам подряд, просто переключаешься стрелками, не закрывая превью.</p><figure data-type="tt_rich_image" class="tt-rich-figure tt-rich-place-center tt-rich-width-full"><img src="/assets/article-2bd43b55ac6794b8.gif" alt="QuickLook — пример работы" loading="lazy"></figure><hr><h2>Что он умеет</h2><p>Утилита поддерживает большинство форматов, с которыми приходится работать:</p><ul><li><p>изображения</p></li><li><p>PDF</p></li><li><p>архивы</p></li><li><p>многие другие форматы</p></li></ul><p>Главное для меня — она корректно показывает превью .psd и .ai. Собственно, это и делает её по-настоящему полезной в дизайн-процессе.</p><hr><h2>Коллеги без графических редакторов</h2><p>Отдельная история с маркетологами, которые у нас работают в связке с дизайнерами. При этом у них нет установленных графических редакторов, и раньше им приходилось просить кого-то открыть файл, чтобы просто посмотреть, что внутри.</p><p>После того как QuickLook появился у всех, эта зависимость исчезла сама собой. Теперь они могут самостоятельно заглянуть в любой файл, не отвлекая никого и не дожидаясь помощи.</p><hr><h2>Что в итоге</h2><p>QuickLook убирает лишние шаги между тобой и содержимым файла. Устанавливается один раз, настраивать ничего не нужно — и с первого же дня начинаешь удивляться, как раньше обходился без него.</p></div>
+</div>
+</main>
+<footer class="div footer" id="ill6ujtur_0">
+<div class="div div--u-ic18sexc9 footer-content-up" id="ic18sexc9_0">
+<div class="text text--u-iced7bdpf h2" id="iced7bdpf_0">
+<span class="text-block-wrap-div">Всегда открыт для интересных предложений <img alt="🤝" aria-hidden="true" class="emoji" draggable="false" src="/assets/41fabf139814bb8c22.svg"></span>
+</div>
+<a class="link-block scroll-to-top link-block--u-i5l4mpbkr" data-action-element="" href="#ix1qzvf79_0" id="i5l4mpbkr_0" style="background-color: rgba(118, 52, 226, 0);" target="_self" aria-label="Наверх">
+<span class="svg-icon svg-icon--u-ify3rcm32" id="ify3rcm32_0" style="color: rgb(9, 9, 9);">
+<svg fill="none" height="21" viewbox="0 0 15 21" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.07039 0.292892C7.67986 -0.0976315 7.0467 -0.0976314 6.65617 0.292892L0.292213 6.65685C-0.0983116 7.04738 -0.0983115 7.68054 0.292213 8.07107C0.682737 8.46159 1.3159 8.46159 1.70643 8.07107L7.36328 2.41421L13.0201 8.07107C13.4107 8.46159 14.0438 8.46159 14.4343 8.07107C14.8249 7.68054 14.8249 7.04738 14.4343 6.65685L8.07039 0.292892ZM7.36328 21L8.36328 21L8.36328 1L7.36328 1L6.36328 1L6.36328 21L7.36328 21Z" fill="#090909"></path>
+</svg>
+</span>
+</a>
+</div>
+<div class="div div--u-ixav97zki footer-content-down" id="ixav97zki_0">
+<div class="div footer-links" id="isipj129t_0">
+<a class="link text-menu link--u-isxva1793" data-action-element="" href="https://t.me/sheldy909" id="isxva1793_0" rel="noopener noreferrer" target="_blank">
+<span class="text-block-wrap-div">Телеграм <img alt="✈" aria-hidden="true" class="emoji" draggable="false" src="/assets/7bd37697525860cea3.svg"></span>
+</a>
+<a class="link text-menu link--u-if0brphyv" data-action-element="" href="mailto:sheldy9090@mail.ru" id="if0brphyv_0" target="_self">
+<span class="text-block-wrap-div">Почта <img alt="📮" aria-hidden="true" class="emoji" draggable="false" src="/assets/da7dd040cdeca0fff8.svg"></span>
+</a>
+<a class="link text-menu link--u-ib1juoe2x" data-action-element="" href="https://dprofile.ru/sheldy909" id="ib1juoe2x_0" rel="noopener noreferrer" target="_blank">
+<span class="text-block-wrap-div">DProfile <img alt="💼" aria-hidden="true" class="emoji" draggable="false" src="/assets/b7244d06499e782eb5.svg"></span>
+</a>
+</div>
+<div class="text txt" id="ivenr9yqt_0">
+<span class="text-block-wrap-div">© 2026</span>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</div><script defer src="/visual.js?v=36"></script></body></html>

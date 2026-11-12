@@ -1,0 +1,22 @@
+/* Spacing uses the site's existing responsive scale: groups, sections, controls. */
+.home-page{--home-section-gap:3.75rem;--home-group-gap:.94rem;--home-control-y:.63rem;--home-control-x:.94rem;--home-radius:.47rem}
+.home-page h1,.home-page h2{margin:0}
+.home-page>.body{row-gap:var(--home-section-gap)}
+.home-page .home-section{padding:0;row-gap:var(--home-group-gap)}
+.home-intro .h1{text-align:left}
+.home-page .home-actions{flex-direction:row;flex-wrap:wrap;gap:var(--home-group-gap);margin-top:var(--home-group-gap)}
+.home-action{display:inline-flex;align-items:center;justify-content:center;padding:var(--home-control-y) var(--home-control-x);border:1px solid #090909;border-radius:var(--home-radius);line-height:1.4;text-decoration:none;color:#090909;transition:color .15s ease,background-color .15s ease,border-color .15s ease}
+.home-action:first-child{background:#7634e2;border-color:#7634e2;color:#fff}
+.home-action:hover,.home-action:focus-visible{background:#7634e2;border-color:#7634e2;color:#fff}
+.home-action:first-child:hover,.home-action:first-child:focus-visible{background:#6125c1;border-color:#6125c1;color:#fff}
+.home-more{align-self:flex-start;color:inherit}
+.home-more:hover{color:#7634e2}
+.home-page .gallery-useful{grid-template-columns:repeat(2,minmax(0,1fr))}
+.home-page .card-image-useful{flex-shrink:0}
+.home-page .card-image-useful .image__img{object-fit:cover}
+@media(max-width:1199px){.home-page{--home-section-gap:5rem;--home-group-gap:1.25rem;--home-control-y:.84rem;--home-control-x:1.25rem;--home-radius:.63rem}}
+@media(max-width:767px){.home-page{--home-section-gap:6.4rem;--home-group-gap:1.6rem;--home-control-y:1rem;--home-control-x:1.6rem;--home-radius:1rem}.home-page .gallery-useful{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:479px){.home-page{--home-section-gap:4.88rem;--home-group-gap:1.22rem;--home-control-y:.76rem;--home-control-x:1.22rem;--home-radius:.76rem}}
+
+/* Keep the introduction readable without changing the page grid. */
+.home-intro .h3{max-width:33.75rem}

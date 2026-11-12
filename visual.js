@@ -1,5 +1,5 @@
 // Preserve source navigation and the source's visible desktop/mobile menu.
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const target=document.getElementById(id);if(target){e.preventDefault();target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'})}}));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const target=document.getElementById(id);if(target){e.preventDefault();if(a.classList.contains('skip-link'))target.focus({preventScroll:true});target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'})}}));
 // Source cursor styling is retained; initialization is independent of Taptop.
 if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelector('.custom-cursor')){
  const cursor=document.createElement('div');

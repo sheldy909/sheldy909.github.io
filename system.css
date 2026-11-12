@@ -1,0 +1,106 @@
+/* Shared layout and spacing. One base step follows the original Taptop scale. */
+:root{--space-unit:.47rem;--space-xs:calc(var(--space-unit)/2);--space-sm:var(--space-unit);--space-md:calc(var(--space-unit)*2);--space-lg:calc(var(--space-unit)*3);--space-xl:calc(var(--space-unit)*4);--space-section:calc(var(--space-unit)*8);--radius:var(--space-unit);--read-width:33.75rem}
+@media(max-width:1199px){:root{--space-unit:.625rem}}
+@media(max-width:767px){:root{--space-unit:.8rem}}
+@media(max-width:479px){:root{--space-unit:.61rem}}
+/* Index pages: centered introductions; broad grid below. */
+.main>.body:not(.detail-layout){row-gap:var(--space-xl)}
+.main>.body>.body-h:not(.detail-heading){align-items:center;text-align:center;gap:var(--space-sm)}
+.main>.body>.body-h:not(.detail-heading)>:is(h1,.h1){text-align:center;margin:0;line-height:1.15}
+.main>.body>.body-h:not(.detail-heading)>.h3{max-width:var(--read-width);margin:0;text-align:center;line-height:1.45}
+.home-page>.body{row-gap:var(--space-section)!important}
+.home-page .home-section{gap:var(--space-md)}
+.home-page .home-actions{justify-content:center;gap:var(--space-md);margin-top:var(--space-md)}
+.home-page .home-intro{gap:var(--space-sm)}
+.home-page .home-intro .h3{margin-inline:auto}
+.home-page .home-section:not(.home-intro)>.h2{margin:0;line-height:1.25}
+.gallery,.gallery-useful{gap:var(--space-md)}
+.gallery-useful{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card,.card-useful,.card-cv{border-radius:var(--radius)}
+/* Editorial pages: back link, title, prose on one shared reading column. */
+.main>.detail-layout{display:flex;flex-direction:column;gap:var(--space-xl);container-type:normal}
+.main>.detail-layout>.detail-back,.main>.detail-layout>.detail-heading{width:100%;max-width:var(--read-width);margin-inline:auto;align-self:center}
+.main>.detail-layout>.detail-back{padding:0;white-space:normal;line-height:1.4}
+.main>.detail-layout>.detail-heading{gap:var(--space-sm);text-align:left}
+.main>.detail-layout>.detail-heading>h1{position:static;top:auto;margin:0;text-align:left;font-size:1.6875rem;line-height:1.2;font-weight:500}
+.main>.detail-layout>.case{width:100%;min-width:0}
+.case p,.case ul,.case ol{margin-bottom:var(--space-md)}
+.case h2{margin-top:var(--space-xl);margin-bottom:var(--space-sm)}
+.case h3{margin-top:var(--space-lg);margin-bottom:var(--space-sm)}
+.case figure{margin:var(--space-xl) 0}
+.case>.text-block-wrap-div>:first-child{margin-top:0}
+.case figure img{display:block;width:100%;height:auto;border-radius:var(--radius)}
+/* About: equal card widths and padding; subgroups stay closer than sections. */
+.about-column .body-gallery,.about-column .div--u-irl810hz5{display:flex;flex-direction:column;gap:var(--space-md)}
+.about-column .card-cv{padding:var(--space-xl);gap:var(--space-lg)}
+.about-column .card-cv>.h3{margin:0;line-height:1.3}
+.about-column .card-cv>div:not(.text):not(.card-line){display:flex;flex-direction:column;gap:var(--space-md);width:100%}
+.about-column .card-cv .paragraph{gap:var(--space-sm)}
+.about-column .card-cv .txt{line-height:1.6}
+.about-column .card-cv .h2{line-height:1.25}
+.about-column .card-cv .cv-post{line-height:1.4}
+.about-column .card-line{width:100%;margin:0}
+.about-column .cv-bio{gap:var(--space-md);align-items:flex-start}
+.about-column .div--u-iex3q3ded{gap:var(--space-sm)}
+.about-column .div--u-i33h8gs96{gap:var(--space-xs)!important}
+.about-column .image--u-iaa8bz0rv{border-radius:var(--radius);overflow:hidden}
+/* Footer is a shared component, independent of the reading width. */
+.main>.footer{margin-top:calc(var(--space-unit)*6)}
+@media(max-width:1199px){
+ .main>.detail-layout>.detail-back,.main>.detail-layout>.detail-heading{max-width:none}
+}
+@media(max-width:767px){
+ .gallery-useful{grid-template-columns:minmax(0,1fr)}
+ .main>.detail-layout>.detail-heading>h1{font-size:1.875rem}
+ .about-column .card-cv{padding:var(--space-lg)}
+}
+@media(max-width:479px){.main>.detail-layout>.detail-heading>h1{font-size:1.75rem}}
+
+.home-page .home-section:not(.home-intro)>.h2{text-align:center;width:100%}
+.home-page .home-more{align-self:center}
+.about-column .card-cv .txt{font-size:var(--read-size)}
+.main>.detail-layout>.detail-heading>h1{display:block}
+
+.main>.detail-layout>.detail-heading>h1{text-wrap:balance}
+.main{row-gap:0}
+@media(max-width:1199px){.main>.header{margin-bottom:var(--space-xl)}}
+.about-column .paragraph>div:not(.text){gap:var(--space-sm)}
+
+.home-page .home-section>.body-h>.h2{text-align:center;width:100%;margin:0;line-height:1.25}
+
+/* Article cards: content determines height; media never collapses under 100% text. */
+.card-useful{height:100%;padding:var(--space-md);gap:var(--space-md)}
+.card-text-useful{height:auto;flex:0 0 auto;gap:var(--space-xs);width:100%}
+.card-image-useful{flex:0 0 auto;min-height:0;min-width:0;width:100%;height:auto;aspect-ratio:5/4}
+.card-image-useful .image__img{width:100%;height:100%;object-fit:contain}
+.card-text-useful .text{line-height:1.4}
+.home-page .gallery-useful{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1199px){.gallery-useful{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:480px) and (max-width:767px){
+ .card-useful{height:auto;flex-direction:row;align-items:center}
+ .card-image-useful{width:36%;flex:0 0 36%}
+ .card-text-useful{width:auto;flex:1 1 0;min-width:0}
+}
+@media(max-width:767px){.gallery-useful,.home-page .gallery-useful{grid-template-columns:minmax(0,1fr)}}
+/* Paragraphs, headings and media have separate, deliberate spacing roles. */
+.case>.text-block-wrap-div>:last-child{margin-bottom:0}
+.about-column .card-cv{gap:var(--space-md)}
+
+/* Let article content define row height; the export's fixed card ratio clips prose. */
+.gallery-useful>.collection__item{aspect-ratio:auto;height:auto;display:flex;overflow:visible;min-width:0}
+.gallery-useful .card-useful{height:auto;min-height:0;flex:1 1 auto;box-sizing:border-box}
+.gallery-useful .card-text-useful,.gallery-useful .card-text-useful>.text{height:auto;min-height:0}
+.gallery-useful .card-text-useful>.text{overflow-wrap:anywhere}
+/* Optical title lift must also reduce its reserved space, not open an extra gap. */
+@media(min-width:1200px){.main>.body>.body-h:not(.detail-heading)>:is(h1,.h1){margin-bottom:-.16em}}
+
+/* Code belongs to the same narrow column as article prose. */
+.case>.text-block-wrap-div>pre{box-sizing:border-box;width:100%;max-width:var(--read-width);margin:var(--space-md) auto;padding:var(--space-md);background:#f9f9f9;border-radius:var(--radius);overflow-x:auto;font-size:.9em;line-height:1.6;white-space:pre}
+@media(max-width:1199px){.case>.text-block-wrap-div>pre{max-width:none}}
+
+/* Keyboard navigation is visible without changing the resting layout. */
+a:focus-visible,button:focus-visible,[role="scrollbar"]:focus-visible{outline:2px solid #7634e2;outline-offset:4px}
+.collection__item:focus-within{overflow:visible}
+.skip-link{position:fixed;top:.75rem;left:.75rem;padding:.6rem .9rem;background:#fff;color:#090909;border-radius:.4rem;z-index:2147483646;transform:translateY(-200%)}
+.skip-link:focus{transform:none}
+main.body:focus{outline:none}
