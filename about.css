@@ -1,6 +1,0 @@
-/* About uses the exact case prose width and responsive breakpoint. */
-.about-column.body{width:100%;max-width:var(--read-width);padding-left:0;padding-right:0;margin-left:auto;margin-right:auto}
-.about-column .div--u-irl810hz5{flex-direction:column;row-gap:inherit}
-.about-column .card-cv{width:100%;min-width:0}
-.about-column .body-gallery{row-gap:inherit}
-@media(max-width:1199px){.about-column.body{max-width:none}}
