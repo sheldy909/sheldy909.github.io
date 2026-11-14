@@ -78,14 +78,27 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
  });
 })();
 
-// Pause looping demos for reduced motion, hidden tabs and off-screen figures.
+// One accessible control; native video chrome remains disabled on iOS.
 (()=>{
- const demos=[...document.querySelectorAll('video.article-demo')];
- if(!demos.length)return;
  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
- const visible=new Set();
- const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);sync()}},{threshold:.05});
- function sync(){for(const video of demos){video.autoplay=!reduced.matches;if(reduced.matches||document.hidden||!visible.has(video))video.pause();else if(!video.dataset.userPaused)video.play().catch(()=>{});}}
- for(const video of demos){video.muted=true;if(reduced.matches){video.autoplay=false;video.pause()}video.addEventListener('pointerdown',()=>{video.dataset.userPaused='true'},{once:true});observer.observe(video)}
- reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
+ const states=new Map();
+ function render(s){const paused=s.video.paused;s.wrap.classList.toggle('is-paused',paused);s.button.textContent=paused?'▶':'Ⅱ';s.button.classList.toggle('needs-start',s.blocked);s.button.setAttribute('aria-label',paused?'Запустить видео':'Приостановить видео');s.button.setAttribute('aria-pressed',String(!paused));}
+ async function play(s){try{await s.video.play();if(document.hidden||!s.visible||s.userPaused||reduced.matches&&!s.userStarted)s.video.pause();s.blocked=false}catch{ s.blocked=true;s.video.pause()}render(s)}
+ function sync(s){if(document.hidden||!s.visible||s.userPaused||reduced.matches&&!s.userStarted){s.video.pause();render(s)}else play(s)}
+ const observer=new IntersectionObserver(entries=>{for(const e of entries){const s=states.get(e.target);s.visible=e.isIntersecting&&e.intersectionRatio>=.4;sync(s)}},{threshold:[0,.4,1]});
+ for(const video of document.querySelectorAll('video.article-demo')){
+  const wrap=document.createElement('div');wrap.className='demo-player is-paused';video.before(wrap);wrap.append(video);
+  const button=document.createElement('button');button.type='button';button.className='demo-toggle';wrap.append(button);
+  const s={video,wrap,button,visible:false,userPaused:false,userStarted:false,blocked:false};states.set(video,s);
+  // The attribute is retained in HTML; only the observer starts playback.
+  video.autoplay=false;video.muted=true;video.controls=false;video.pause();
+  let touchTimer;
+  function toggle(){s.userStarted=true;s.userPaused=!video.paused;if(s.userPaused)video.pause();else play(s);render(s)}
+  video.addEventListener('click',toggle);button.addEventListener('click',toggle);
+  wrap.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){wrap.classList.add('is-touched');clearTimeout(touchTimer);touchTimer=setTimeout(()=>wrap.classList.remove('is-touched'),1800)}});
+  for(const event of ['play','pause','ended'])video.addEventListener(event,()=>render(s));
+  render(s);observer.observe(video);
+ }
+ document.addEventListener('visibilitychange',()=>states.forEach(sync));
+ reduced.addEventListener('change',()=>{for(const s of states.values()){s.userStarted=false;sync(s)}});
 })();
