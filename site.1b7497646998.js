@@ -119,16 +119,26 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
   if(!solid(x-4,y)||!solid(x+4,y)||!solid(x,y-4)||!solid(x,y+4))
    for(let z=-12;z<16;z+=4)points.push([x-180,y-70,z]);
  }
+ // Fit the entire rotation, including glyph size, to the available media width.
+ let extentX=0,extentY=0;
+ for(let step=0;step<720;step++){
+  const a=step*Math.PI/360,co=Math.cos(a),si=Math.sin(a);
+  for(const [x,y,z] of points){
+   const depth=-x*si+z*co,p=600/(600-depth);
+   extentX=Math.max(extentX,Math.abs((x*co+z*si)*p));
+   extentY=Math.max(extentY,Math.abs(y*p));
+  }
+ }
  const reduced=matchMedia('(prefers-reduced-motion:reduce)');
  let width=0,height=0,angle=-.35,last=0,frame=0,visible=false;
  function draw(){
-  const dpr=Math.min(devicePixelRatio||1,2);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
-  const scale=Math.min(width/390,height/185),co=Math.cos(angle),si=Math.sin(angle);
+  const dpr=Math.min(devicePixelRatio||1,2);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.clearRect(0,0,width,height);
+  const scale=Math.min(width/(2*extentX+5),height/(2*extentY+5)),co=Math.cos(angle),si=Math.sin(angle);
   const cloud=points.map(([x,y,z])=>{const depth=-x*si+z*co;return [x*co+z*si,y,depth]}).sort((a,b)=>a[2]-b[2]);
   ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=Math.max(3,scale*4.3)+'px monospace';
   for(const [x,y,z] of cloud){
    const perspective=600/(600-z),shade=Math.round(45-(z/190)*32);
-   ctx.fillStyle='rgba('+shade+','+shade+','+shade+','+(0.45+(z+190)/760)+')';
+   ctx.fillStyle='#7634e2';ctx.globalAlpha=.55+(z+190)/900;
    ctx.fillText(z>0?'#':'+',width/2+x*scale*perspective,height/2+y*scale*perspective);
   }
  }

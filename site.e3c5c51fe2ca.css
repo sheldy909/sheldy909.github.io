@@ -416,5 +416,8 @@ video::-webkit-media-controls,video::-webkit-media-controls-start-playback-butto
 }
 
 /* 404 uses the detail page reading column and the full media width. */
-.error-art{width:100%;aspect-ratio:2.2;min-width:0;overflow:hidden;}
+.error-art{width:100%;aspect-ratio:1.65;min-width:0;overflow:hidden;}
 .error-orbit{display:block;width:100%;height:100%;}
+
+.main>.error-page>.detail-heading{gap:var(--space-sm);}
+.error-page>.detail-heading>.h3{margin:0;}
