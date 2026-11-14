@@ -78,27 +78,19 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
  });
 })();
 
-// One accessible control; native video chrome remains disabled on iOS.
+// Silent inline demos: playback follows visibility and motion preferences.
 (()=>{
- const reduced=matchMedia('(prefers-reduced-motion:reduce)');
- const states=new Map();
- function render(s){const paused=s.video.paused;s.wrap.classList.toggle('is-paused',paused);s.button.textContent=paused?'▶':'Ⅱ';s.button.classList.toggle('needs-start',s.blocked);s.button.setAttribute('aria-label',paused?'Запустить видео':'Приостановить видео');s.button.setAttribute('aria-pressed',String(!paused));}
- async function play(s){try{await s.video.play();if(document.hidden||!s.visible||s.userPaused||reduced.matches&&!s.userStarted)s.video.pause();s.blocked=false}catch{ s.blocked=true;s.video.pause()}render(s)}
- function sync(s){if(document.hidden||!s.visible||s.userPaused||reduced.matches&&!s.userStarted){s.video.pause();render(s)}else play(s)}
- const observer=new IntersectionObserver(entries=>{for(const e of entries){const s=states.get(e.target);s.visible=e.isIntersecting&&e.intersectionRatio>=.4;sync(s)}},{threshold:[0,.4,1]});
- for(const video of document.querySelectorAll('video.article-demo')){
-  const wrap=document.createElement('div');wrap.className='demo-player is-paused';video.before(wrap);wrap.append(video);
-  const button=document.createElement('button');button.type='button';button.className='demo-toggle';wrap.append(button);
-  const s={video,wrap,button,visible:false,userPaused:false,userStarted:false,blocked:false};states.set(video,s);
-  // The attribute is retained in HTML; only the observer starts playback.
-  video.autoplay=false;video.muted=true;video.controls=false;video.pause();
-  let touchTimer;
-  function toggle(){s.userStarted=true;s.userPaused=!video.paused;if(s.userPaused)video.pause();else play(s);render(s)}
-  video.addEventListener('click',toggle);button.addEventListener('click',toggle);
-  wrap.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){wrap.classList.add('is-touched');clearTimeout(touchTimer);touchTimer=setTimeout(()=>wrap.classList.remove('is-touched'),1800)}});
-  for(const event of ['play','pause','ended'])video.addEventListener(event,()=>render(s));
-  render(s);observer.observe(video);
+ const videos=[...document.querySelectorAll('video.article-demo')];
+ if(!videos.length)return;
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)'),visible=new Set();
+ function stop(video,poster=false){video.pause();if(poster)video.load()}
+ async function play(video){
+  if(document.hidden||!visible.has(video)||reduced.matches)return stop(video);
+  try{await video.play();if(document.hidden||!visible.has(video)||reduced.matches)stop(video)}catch{stop(video,true)}
  }
- document.addEventListener('visibilitychange',()=>states.forEach(sync));
- reduced.addEventListener('change',()=>{for(const s of states.values()){s.userStarted=false;sync(s)}});
+ function sync(){for(const video of videos)if(reduced.matches)stop(video,true);else if(!document.hidden&&visible.has(video))play(video);else stop(video)}
+ const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting&&entry.intersectionRatio>=.25)visible.add(entry.target);else visible.delete(entry.target)}sync()},{threshold:.25});
+ for(const video of videos){video.muted=true;video.pause();video.addEventListener('play',()=>{if(document.hidden||!visible.has(video)||reduced.matches)stop(video)});video.addEventListener('click',()=>play(video));observer.observe(video)}
+ reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
+ if(reduced.matches)sync();
 })();
