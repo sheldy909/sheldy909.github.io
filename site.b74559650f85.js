@@ -115,9 +115,14 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
    const stream=page.node.lookup(pdf.PDFName.of('Contents'),pdf.PDFRawStream);
    const original=String.fromCharCode(...pdf.decodePDFRawStream(stream).decode());
    const now=new Date(),age=now.getFullYear()-2000-(now.getMonth()===0&&now.getDate()<6?1:0);
-   const pattern=/(% CV_AGE_START\s+[\s\S]*?\()\d+(\) Tj[\s\S]*?% CV_AGE_END)/;
-   if(!pattern.test(original))throw new Error('Age marker missing');
-   const updated=original.replace(pattern,(_,before,after)=>before+age+after);
+   const pattern=/(% CV_AGE_START[\s\S]*?)(\((?:\\.|[^\\)])*\))(\s*Tj[\s\S]*?% CV_AGE_END)/;
+   const marker=original.match(pattern);if(!marker)throw new Error('Birth date marker missing');
+   const fontName=marker[0].match(/\/([^\s]+)\s+9\.5 Tf/)[1];
+   const fonts=page.node.Resources().lookup(pdf.PDFName.of('Font'),pdf.PDFDict),font=fonts.lookup(pdf.PDFName.of(fontName),pdf.PDFDict);
+   const cmap=String.fromCharCode(...pdf.decodePDFRawStream(font.lookup(pdf.PDFName.of('ToUnicode'),pdf.PDFRawStream)).decode()),encoding=new Map();
+   for(const match of cmap.matchAll(/<([0-9a-f]{2})>\s*<([0-9a-f]{4})>/gi))encoding.set(String.fromCodePoint(parseInt(match[2],16)),match[1]);
+   const ageText=`Возраст: ${age} · Воронеж`,hex=Array.from(ageText,char=>{const code=encoding.get(char);if(!code)throw new Error('Missing CV glyph');return code}).join('');
+   const updated=original.replace(pattern,(_,before,text,after)=>before+'<'+hex+'>'+after);
    page.node.set(pdf.PDFName.of('Contents'),doc.context.register(doc.context.flateStream(updated)));
    const blob=new Blob([await doc.save()],{type:'application/pdf'}),href=URL.createObjectURL(blob),download=document.createElement('a');
    download.href=href;download.download='Roman-Plyaskin-CV.pdf';download.hidden=true;document.body.append(download);download.click();download.remove();setTimeout(()=>URL.revokeObjectURL(href),60000);
