@@ -94,3 +94,34 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
  reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
  if(reduced.matches)sync();
 })();
+
+// Update the numeric age in the PDF at download time; everything stays local.
+(()=>{
+ let library,pending=false;
+ function loadPDF(){
+  if(window.PDFLib)return Promise.resolve(window.PDFLib);
+  if(!library)library=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='/assets/pdf-lib.1.17.1.min.js';script.onload=()=>resolve(window.PDFLib);script.onerror=()=>{library=null;script.remove();reject(new Error('PDF library unavailable'))};document.head.append(script)});
+  return library;
+ }
+ document.addEventListener('click',async event=>{
+  const link=event.target.closest('a[href]');
+  if(!link||link.dataset.cvStatic||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+  const url=new URL(link.href,location.href);
+  if(url.origin!==location.origin||url.pathname!=='/Roman-Plyaskin-CV.pdf')return;
+  event.preventDefault();event.stopImmediatePropagation();if(pending)return;pending=true;link.setAttribute('aria-busy','true');
+  try{
+   const [pdf,response]=await Promise.all([loadPDF(),fetch(url.href,{cache:'no-cache'})]);if(!response.ok)throw new Error('CV unavailable');
+   const doc=await pdf.PDFDocument.load(await response.arrayBuffer());const page=doc.getPages()[0];
+   const stream=page.node.lookup(pdf.PDFName.of('Contents'),pdf.PDFRawStream);
+   const original=String.fromCharCode(...pdf.decodePDFRawStream(stream).decode());
+   const now=new Date(),age=now.getFullYear()-2000-(now.getMonth()===0&&now.getDate()<6?1:0);
+   const pattern=/(% CV_AGE_START\s+[\s\S]*?\()\d+(\) Tj[\s\S]*?% CV_AGE_END)/;
+   if(!pattern.test(original))throw new Error('Age marker missing');
+   const updated=original.replace(pattern,(_,before,after)=>before+age+after);
+   page.node.set(pdf.PDFName.of('Contents'),doc.context.register(doc.context.flateStream(updated)));
+   const blob=new Blob([await doc.save()],{type:'application/pdf'}),href=URL.createObjectURL(blob),download=document.createElement('a');
+   download.href=href;download.download='Roman-Plyaskin-CV.pdf';download.hidden=true;document.body.append(download);download.click();download.remove();setTimeout(()=>URL.revokeObjectURL(href),60000);
+  }catch(error){console.warn('Downloading the static CV instead:',error);link.dataset.cvStatic='true';link.click();delete link.dataset.cvStatic}
+  finally{pending=false;link.removeAttribute('aria-busy')}
+ },true);
+})();
