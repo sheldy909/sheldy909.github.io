@@ -75,7 +75,7 @@ a:hover{text-decoration:none;}
 .cv-contacts{width: auto;display: flex;flex-direction: column;row-gap: calc(var(--layout-unit) * 0.47);align-items: flex-end;}
 .contact-link:hover{color: var(--color-accent);}
 .cv-entry-group{display: flex;flex-direction: column;}
-.cv-entry-meta{display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;}
+.cv-entry-meta{display:block;}
 .cv-entry-heading{display: flex;flex-direction: column;}
 .cv-entry{display: flex;align-items: flex-start;flex-direction: column;}
 @media     (max-width:1199px) {.cv-summary{flex-direction: column;row-gap: calc(var(--layout-unit) * 0.94);}}
@@ -429,9 +429,8 @@ video::-webkit-media-controls,video::-webkit-media-controls-start-playback-butto
 .detail-more{margin-top:calc(var(--gap-section) - var(--gap-group));padding-top:var(--gap-group);border-top:1px solid var(--color-divider);}
 .main>.footer{margin-top:var(--gap-section);}
 .paragraph,.cv-entry,.about-column .card-cv>div:not(.text){gap:var(--gap-paragraph);}
-.cv-entry-heading,.cv-entry-group,.cv-entry-meta,.about-column .card-cv .paragraph,.about-column .paragraph>div:not(.text),.about-column .cv-identity,.card-text-useful{gap:var(--gap-related);}
+.cv-entry-heading,.cv-entry-group,.about-column .paragraph>div:not(.text),.about-column .cv-identity,.card-text-useful{gap:var(--gap-related);}
 .about-column .cv-bio{gap:var(--gap-paragraph);}
-.card-cv>.cv-entry+.cv-entry{margin-top:var(--gap-paragraph);}
 .about-column .cv-section-title,.about-column .cv-entry-title,.about-column .cv-group-title{color:var(--color-text);font-weight:500;}
 .about-column .cv-post{color:var(--color-text);}
 .case>.text-block-wrap-div>*{margin-block:0;}
@@ -446,6 +445,10 @@ video::-webkit-media-controls,video::-webkit-media-controls-start-playback-butto
 .about-column .cv-details{gap:var(--gap-related);}
 .about-column .cv-bio>.text:first-child{color:var(--color-text-muted);font-size:var(--fs-caption);}
 .about-column .cv-contacts .contact-link{font-size:var(--fs-ui);text-decoration:none;}
-.about-column .cv-entry-meta{gap:var(--gap-related);font-size:var(--fs-caption);line-height:1.4;}
-.cv-company{display:inline-block;padding:.25em .7em;border-radius:var(--radius);background:var(--color-bg);color:var(--color-text);font-size:var(--fs-caption);line-height:1.4;}
-.card-image-useful{max-height:200px;}
+/* One record component for work and education. */
+.about-column .card-cv>.cv-entries{display:flex;flex-direction:column;gap:min(var(--gap-section),40px);width:100%;}
+.about-column .cv-entry{gap:var(--gap-paragraph);margin:0;}
+.about-column .cv-entry-heading{display:flex;flex-direction:column;align-items:stretch;gap:var(--gap-related);width:100%;}
+.cv-entry-heading>.cv-post{font-weight:400;font-size:var(--fs-body);line-height:1.4;}
+.cv-entry-heading>.cv-entry-meta{font-size:var(--fs-caption);line-height:1.5;color:var(--color-text-muted);}
+.about-column .card-cv .paragraph{gap:var(--gap-paragraph);}
