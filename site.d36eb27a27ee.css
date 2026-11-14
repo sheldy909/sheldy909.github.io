@@ -414,3 +414,7 @@ video::-webkit-media-controls,video::-webkit-media-controls-start-playback-butto
 @media (min-width:1920px){
  html{font-size:calc(100% + (100vw - 1920px) * .008333333333);}
 }
+
+/* 404 uses the detail page reading column and the full media width. */
+.error-art{width:100%;aspect-ratio:2.2;min-width:0;overflow:hidden;}
+.error-orbit{display:block;width:100%;height:100%;}

@@ -104,3 +104,37 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
  reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
  if(reduced.matches)sync();
 })();
+
+// A local symbol cloud forms an extruded 404; no external graphics libraries.
+(()=>{
+ const canvas=document.querySelector('.error-orbit');if(!canvas)return;
+ const ctx=canvas.getContext('2d');if(!ctx)return;
+ const mask=document.createElement('canvas');mask.width=360;mask.height=140;
+ const pen=mask.getContext('2d');pen.font='900 128px monospace';pen.textAlign='center';pen.textBaseline='middle';pen.fillText('404',180,74);
+ const pixels=pen.getImageData(0,0,360,140).data;
+ const solid=(x,y)=>x>=0&&x<360&&y>=0&&y<140&&pixels[(y*360+x)*4+3]>100;
+ const points=[];
+ for(let y=0;y<140;y+=4)for(let x=0;x<360;x+=4)if(solid(x,y)){
+  points.push([x-180,y-70,-16],[x-180,y-70,16]);
+  if(!solid(x-4,y)||!solid(x+4,y)||!solid(x,y-4)||!solid(x,y+4))
+   for(let z=-12;z<16;z+=4)points.push([x-180,y-70,z]);
+ }
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)');
+ let width=0,height=0,angle=-.35,last=0,frame=0,visible=false;
+ function draw(){
+  const dpr=Math.min(devicePixelRatio||1,2);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
+  const scale=Math.min(width/390,height/185),co=Math.cos(angle),si=Math.sin(angle);
+  const cloud=points.map(([x,y,z])=>{const depth=-x*si+z*co;return [x*co+z*si,y,depth]}).sort((a,b)=>a[2]-b[2]);
+  ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=Math.max(3,scale*4.3)+'px monospace';
+  for(const [x,y,z] of cloud){
+   const perspective=600/(600-z),shade=Math.round(45-(z/190)*32);
+   ctx.fillStyle='rgba('+shade+','+shade+','+shade+','+(0.45+(z+190)/760)+')';
+   ctx.fillText(z>0?'#':'+',width/2+x*scale*perspective,height/2+y*scale*perspective);
+  }
+ }
+ function tick(now){frame=0;if(!visible||document.hidden||reduced.matches)return;if(now-last>=33){angle+=(Math.min(now-last,66)/1000)*.32;last=now;draw()}frame=requestAnimationFrame(tick)}
+ function sync(){cancelAnimationFrame(frame);frame=0;last=performance.now();if(reduced.matches){angle=-.35;draw()}else if(visible&&!document.hidden)frame=requestAnimationFrame(tick)}
+ new ResizeObserver(()=>{width=canvas.clientWidth;height=canvas.clientHeight;const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);draw()}).observe(canvas);
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync()}).observe(canvas);
+ reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
+})();
