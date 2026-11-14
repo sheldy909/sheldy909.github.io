@@ -77,3 +77,15 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!document.querySelect
   if(event.persisted){main.style.animation='none';void main.offsetWidth;main.style.animation=''}
  });
 })();
+
+// Pause looping demos for reduced motion, hidden tabs and off-screen figures.
+(()=>{
+ const demos=[...document.querySelectorAll('video.article-demo')];
+ if(!demos.length)return;
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)');
+ const visible=new Set();
+ const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting)visible.add(entry.target);else visible.delete(entry.target);sync()}},{threshold:.05});
+ function sync(){for(const video of demos){video.autoplay=!reduced.matches;if(reduced.matches||document.hidden||!visible.has(video))video.pause();else if(!video.dataset.userPaused)video.play().catch(()=>{});}}
+ for(const video of demos){video.muted=true;if(reduced.matches){video.autoplay=false;video.pause()}video.addEventListener('pointerdown',()=>{video.dataset.userPaused='true'},{once:true});observer.observe(video)}
+ reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
+})();
