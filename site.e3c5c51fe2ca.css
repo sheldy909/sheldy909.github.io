@@ -199,7 +199,8 @@ img{height: auto;max-width: 100%;}
 .collection,.collection__list,.collection__item,.card,.card-useful,.card-text,.card-text-useful,.card-cv,.paragraph{min-width:0;}
 .gallery,.gallery-useful{gap:var(--space-md);}
 .gallery{grid-template-columns:repeat(2,minmax(0,1fr));}
-.gallery>.collection__item{aspect-ratio:11/10;overflow:hidden;}
+.gallery>.collection__item{aspect-ratio:11/10;overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr);}
+.gallery>.collection__item>.card{height:auto;min-height:0;}
 .card,.card-useful,.card-cv{border-radius:var(--radius);}
 .card-text>.text:first-child{min-width:0;overflow-wrap:anywhere;}
 .card-text>.text:last-child{flex-shrink:0;}
